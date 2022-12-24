@@ -13,7 +13,7 @@
         "october/editor": "^2.0",
         "october/rain": "^2.0",
         "laravel/framework": "^6.0",
-        "albrightlabs/mediameta-plugin": "dev-master",
+        "albrightlabs/mediameta-plugin": "dev-main",
         "albrightlabs/devnotify-plugin": "dev-main",
         "rainlab/pages-plugin": "^1.5"
     },
