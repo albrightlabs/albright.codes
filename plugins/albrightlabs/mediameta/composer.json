@@ -1,0 +1,16 @@
+{
+    "name": "albrightlabs/mediameta-plugin",
+    "type": "october-plugin",
+    "description": "Extend your media manager with metadata and other funcionality",
+    "homepage": "https://www.albrightlabs.com",
+    "keywords": ["october", "cms", "edit","seo","metadata","media finder"],
+    "authors": [
+        {
+            "name": "Albrightlabs",
+            "email": "hello@albrightlabs.com"
+        }
+    ],
+    "require": {
+        "spatie/image": "^1.0"
+    }
+}

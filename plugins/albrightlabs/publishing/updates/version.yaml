@@ -1,0 +1,7 @@
+1.0.1: First version of Publishing
+1.0.2:
+    - Second version of Publishing
+    - create_scheduled_releases_table.php
+1.0.3:
+    - Third version of Publishing
+    - create_previews_table.php

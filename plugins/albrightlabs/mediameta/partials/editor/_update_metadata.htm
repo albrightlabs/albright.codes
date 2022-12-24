@@ -1,0 +1,54 @@
+<?= Form::ajax($this->getEventHandler('onApplyMetadataUpdate'), [
+    'data-stripe-load-indicator' => 1,
+    'id' => 'asset-metadata-popup-form',
+]) ?>
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="popup">&times;</button>
+	<h4 class="modal-title"><?= e(trans('albrightlabs.mediameta::lang.form.update_metadata')) ?></h4>
+</div>
+<div class="modal-body">
+    <div class="layout whiteboard">
+    	<?php
+    	if($this->vars['is_image']):
+    	?>
+    	<div class="layout-cell panel no-padding">
+    		<img src="<?= Config::get('app.url') ?>/storage/app/media<?= $originalPath ?>" class="w-full" style="max-width:100%; width:100%;"/>
+    	</div>
+    	<?php
+    	endif;
+    	?>
+    	<input type="hidden" name="path" value="<?= $originalPath ?>"/>
+    	<div class="layout-cell panel">
+        <div class="form-group">
+            <label>Alt Text</label>
+            <textarea
+                type="text"
+                name="description"
+                class="form-control"
+                rows="4"
+                autocomplete="off"><?= $description ? $description : $this->vars['exif']['ImageDescription'] ?? '' ?></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer" style="padding-top:15px;">
+      <button
+          type="submit"
+          data-attach-loading
+          class="btn btn-primary">
+          <?= e(trans('backend::lang.form.apply')) ?>
+      </button>
+      <button
+          type="button"
+          class="btn btn-default"
+          data-dismiss="popup">
+          <?= e(trans('backend::lang.form.close')) ?>
+      </button>
+  </div>
+<script>
+    setTimeout(
+        function(){ $('#asset-metadata-popup-form input.form-control:eq(0)').focus() },
+        310
+    )
+</script>
+<?= Form::close() ?>

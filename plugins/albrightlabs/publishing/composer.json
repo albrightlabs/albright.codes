@@ -1,0 +1,8 @@
+{
+    "name": "albrightlabs/publishing-plugin",
+    "type": "october-plugin",
+    "description": "Provides scheduled publishing support for SG.",
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}

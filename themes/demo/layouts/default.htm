@@ -1,0 +1,31 @@
+description = "Default layout"
+
+[resources]
+less[] = "layouts/default.less"
+
+[snowday]
+==
+<!DOCTYPE html>
+<html>
+    <head>
+        {% partial 'site/meta' %}
+    </head>
+    <body class="{{ 'page-'~this.page.id }}">
+{% component 'snowday' %}
+        <!-- Header -->
+        <header id="layout-header">
+            {% partial 'site/header' %}
+        </header>
+
+        <!-- Content -->
+        <section id="layout-content">
+            {% page %}
+        </section>
+
+        <!-- Footer -->
+        <footer id="layout-footer">
+            {% partial 'site/footer' %}
+        </footer>
+
+    </body>
+</html>

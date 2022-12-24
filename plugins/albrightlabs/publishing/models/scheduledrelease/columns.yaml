@@ -1,0 +1,26 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    publish_at:
+        label: Publish at
+        type: datetime
+    plugincode:
+        label: Plugin
+        type: text
+    modelname:
+        label: Model
+        type: text
+    modelid:
+        label: Model ID
+        type: text
+    admin:
+        label: Admin
+        type: partial
+        path: column_admin
+    content:
+        label: Content
+        type: partial
+        path: column_content
+        invisible: true

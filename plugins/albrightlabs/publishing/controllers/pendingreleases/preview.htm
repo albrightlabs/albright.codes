@@ -1,0 +1,79 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('albrightlabs/publishing/pendingreleases') ?>">Pending Releases</a></li>
+        <li><?= e($this->pageTitle) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <div class="form-preview">
+
+        <div class="row">
+            <div class="col-xs-12 mb-3">
+                <label>Plugin</label>
+                <span class="form-control" disabled><?= $formModel->plugincode ?></span>
+            </div>
+            <div class="col-xs-6 mb-3">
+
+                <label>Model</label>
+                <span class="form-control" disabled><?= $formModel->modelname ?></span>
+            </div>
+            <div class="col-xs-6 mb-3">
+
+                <label>Model ID</label>
+                <span class="form-control" disabled><?= $formModel->modelid ?></span>
+            </div>
+            <div class="col-xs-12 mb-3">
+                <label>Admin</label>
+                <span class="form-control" style="height:auto;" disabled>
+                    <span style="display:block; margin-bottom:8px;">
+                        <small style="font-size:80%; font-weight:600;"><?= strtoupper(str_replace('_', ' ', 'ID')) ?></small><br />
+                        <?= $formModel->admin['id'] ?>
+                    </span>
+                    <span style="display:block; margin-bottom:8px;">
+                        <small style="font-size:80%; font-weight:600;"><?= strtoupper(str_replace('_', ' ', 'First Name')) ?></small><br />
+                        <?= $formModel->admin['first_name'] ?>
+                    </span>
+                    <span style="display:block; margin-bottom:8px;">
+                        <small style="font-size:80%; font-weight:600;"><?= strtoupper(str_replace('_', ' ', 'Last Name')) ?></small><br />
+                        <?= $formModel->admin['last_name'] ?>
+                    </span>
+                    <span style="display:block; margin-bottom:8px;">
+                        <small style="font-size:80%; font-weight:600;"><?= strtoupper(str_replace('_', ' ', 'Email Address')) ?></small><br />
+                        <?= $formModel->admin['email'] ?>
+                    </span>
+                    <span style="display:block; margin-bottom:8px;">
+                        <small style="font-size:80%; font-weight:600;"><?= strtoupper(str_replace('_', ' ', 'Login')) ?></small><br />
+                        <?= $formModel->admin['login'] ?>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 mb-3">
+                <label>Content</label>
+                <div class="form-control" style="height:auto;" disabled>
+                    <?php foreach($formModel->content as $key => $detail){ ?>
+                        <span style="display:block; margin-bottom:8px;">
+                            <small style="font-size:80%; font-weight:600;"><?= strtoupper(str_replace('_', ' ', $key)) ?></small><br />
+                            <?= $detail ?>
+                        </span>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="mb-3">
+      <a href="<?= Backend::url('albrightlabs/publishing/pendingreleases') ?>" class="btn btn-default oc-icon-chevron-left"><?= e(trans('backend::lang.form.return_to_list')) ?></a>&nbsp;
+      <a href="javascrit:;" class="btn btn-danger oc-icon-trash" data-request="onDelete" data-request-data="pendingrelease_id: <?= $formModel->id ?>," data-request-confirm="This will delete and unschedule the pending release. Continue?">Delete</a>
+    </p>
+
+<?php else: ?>
+
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('albrightlabs/publishing/pendingreleases') ?>" class="btn btn-default"><?= e(trans('backend::lang.form.return_to_list')) ?></a></p>
+
+<?php endif ?>

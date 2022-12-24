@@ -1,0 +1,18 @@
+.item-tools {
+	display: flex!important;
+	align-items: flex-end!important;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.item-tools a {
+	position: relative!important;
+	display: block;
+}
+.item-tools a i {
+	margin-right: 4px;
+}
+body:not(.no-select) div[data-control="media-manager"] .media-list.tiles li:hover h4,
+body:not(.no-select) div[data-control="media-manager"] .media-list.list li:hover h4 {
+	padding-right: 75px!important;
+}

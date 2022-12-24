@@ -1,0 +1,3 @@
+<?= $record->admin['first_name'] ?> <?= $record->admin['last_name'] ?>
+<?php if((null != $record->admin['first_name'] || null != $record->admin['last_name']) && null != $record->admin['email']){ echo ' - '; } ?>
+<?= $record->admin['email'] ?>

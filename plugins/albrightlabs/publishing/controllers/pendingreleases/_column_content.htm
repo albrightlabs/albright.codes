@@ -1,0 +1,8 @@
+<?php
+    $index = 0;
+    foreach($record->content as $field => $content){
+        $index++;
+        echo ucwords(str_replace('_',' ',$field));
+        if($index != count($record->content)){ echo ', '; }
+    }
+?>

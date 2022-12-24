@@ -1,0 +1,8 @@
+<a id="save-button" href="javascript:;" data-request="onScheduleRelease" class="btn btn-primary oc-icon-save"> Draft</a>
+
+<script>
+  $(document).ready(function(){
+    var save_button = $('[data-field-name="_scripts"] #save-button').detach();
+    $('.form-buttons>[data-control="preview-button"]').before(save_button);
+  });
+</script>

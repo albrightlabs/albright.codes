@@ -1,0 +1,64 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+
+    modelname:
+        label: Model
+        type: group
+        conditions: modelname in (:filtered)
+        options:
+            Services: Services
+            Franchise: Franchise
+            Careers: Careers
+            Regions: Regions
+            ServicesCategories: Services Categories
+            Fo: Fo
+            Foblog: Foblog
+            PpcLandingPages: Ppc Landing Pages
+            LawnCareGuides: Lawn Care Guides
+            TreeCareGuides: Tree Care Guides
+            PestControlGuides: Pest Control Guides
+            LawnCareTopics: Lawn Care Topics
+            TreeCareTopics: Tree Care Topics
+            PestControlTopics: Pest Control Topics
+            Faq: Faq
+            AboutUs: About Us
+            AboutUsApproach: About Us Approach
+            AboutUsContact: About Us Contact
+            AntControl: Ant Control
+            Career: Career
+            CheckoutThankYou: Checkout Thank You
+            Homepage: Homepage
+            LandingPageLearn: Landing Page Learn
+            LandingPageLawnCareServices: Landing Page Lawn Care Services
+            LandingPagePestControlServices: Landing Page Pest Control Services
+            LandingPageServices: Landing Page Services
+            LandingPageTreeShrubServices: Landing Page Tree Shrub Services
+            MosquitoControl: Mosquito Control
+            Privacy: Privacy
+            Survey: Survey
+            OutOfArea: Out Of Area
+            Footer: Footer
+            Policy: Policy
+            Term: Term
+            CommercialServices: Commercial Services
+            Post: Post
+            
+    admin:
+        label: Administrator
+        type: group
+        conditions: adminid in (:filtered)
+        modelClass: Albrightlabs\Revisions\Models\Revision
+        options: getAdminOptions
+
+    created_at:
+        label: Created at
+        type: daterange
+        conditions: created_at >= ':after' AND created_at <= ':before'
+
+    publish_at:
+        label: Publish at
+        type: daterange
+        conditions: publish_at >= ':after' AND publish_at <= ':before'

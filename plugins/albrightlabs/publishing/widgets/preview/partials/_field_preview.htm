@@ -1,0 +1,52 @@
+<?php
+
+    // get the plugin code and model name form class
+    if(get_class($this) == 'System\Controllers\Settings'){
+        $modelNamespace = explode('\\', get_class($this->formWidget->model));
+    }
+    else{
+        $modelNamespace = explode('\\', get_class($this->formGetModel()));
+    }
+    $modelName = $modelNamespace[3];
+    $pluginCode = $modelNamespace[0].'.'.$modelNamespace[1];
+
+?>
+
+<?php
+    if(get_class($this) == 'System\Controllers\Settings'){
+?>
+    <script>
+        $(document).ready(function(){
+            $('<button type="button" id="generate-preview-button" data-hotkey="ctrl+p, cmd+p" data-load-indicator="Generating preview..." class="btn btn-default">Preview</button>').insertAfter('#layout-body .form-buttons .loading-indicator-container button[data-request-data="close:1"]');
+        });
+    </script>
+<?php
+    }
+    else{
+?>
+    <script>
+        $(document).ready(function(){
+            $('<button type="button" id="generate-preview-button" data-hotkey="ctrl+p, cmd+p" data-load-indicator="Generating preview..." class="btn btn-default">Preview</button>').insertAfter('#layout-body .form-buttons .loading-indicator-container button[data-request="onDelete"]');
+        });
+    </script>
+<?php
+    }
+?>
+
+<script>
+    $('html').on('click', '#generate-preview-button', function(){
+        $('form').request('onGeneratePreview', {
+            data: {
+                plugincode: '<?= $pluginCode ?>',
+                modelname: '<?= $modelName ?>',
+                modelid: '<?= $formModel->id ?>',
+                adminid: '<?= $this->user->id ?>',
+            },
+            success: function(data) {
+                this.success(data).done(function() {
+                    window.open(data.open_preview_url);
+                });
+            }
+        });
+    });
+</script>

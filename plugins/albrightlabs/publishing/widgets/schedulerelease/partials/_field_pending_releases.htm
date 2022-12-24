@@ -1,0 +1,135 @@
+<?php
+
+    // get the plugin code and model name form class
+    if(get_class($this) == 'System\Controllers\Settings'){
+        $modelNamespace = explode('\\', get_class($this->formWidget->model));
+    }
+    else{
+        $modelNamespace = explode('\\', get_class($this->formGetModel()));
+    }
+    $modelName = $modelNamespace[3];
+    $pluginCode = $modelNamespace[0].'.'.$modelNamespace[1];
+
+    // get the timezone offset for this user
+    $timezoneoffset = \Albrightlabs\Publishing\Classes\TimeZoneManager::onGetAdminTimezoneOffset();
+
+    // get releases for this model
+    $releases = \Albrightlabs\Publishing\Models\ScheduledRelease::where('plugincode', $pluginCode)->where('modelname', $modelName)->where('modelid', $formModel->id)->orderBy('publish_at', 'asc')->get();
+
+?>
+
+<style type="text/css">
+  tr td a.restore-link, tr td a.get-revision-details-trigger { display: none; text-decoration: none; }
+  tr:hover td a.restore-link, tr:hover td a.get-revision-details-trigger { display: inline; text-decoration: none; }
+  a.restore-link, a.get-revision-details-trigger { line-height: 1; }
+  .text-align-right { text-align: right; }
+  .text-align-center { text-align: center; }
+</style>
+<div class="control-list">
+    <table class="table data">
+        <thead>
+            <tr>
+                <th class="sort-desc"><a href="javscript:;">Publish At</a></th>
+                <th><span>Admin</span></th>
+                <th style="width:200px;">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if(count($releases) > 0){ ?>
+                <?php foreach($releases as $release){ ?>
+                    <tr>
+                        <td>
+                          <?php echo date('D, M j, Y g:i A', strtotime($release->publish_at.' '.$timezoneoffset.' seconds')); ?>
+                        </td>
+                        <td><?= $release->admin['first_name'] ?> <?= $release->admin['last_name'] ?><?php if(($release->admin['first_name'] || $release->admin['mast_name']) && $release->admin['email']){ ?> - <?php } ?><?= $release->admin['email'] ?></td>
+                        <td class="text-align-right">
+                            <a href="javascript:;" class="text-primary oc-icon-eye get-revision-details-trigger" data-control="popup" data-handler="schedulerelease::onGetReleaseDetails" data-size="giant" data-stripe-load-indicator data-extra-data="release_id: <?= $release->id ?>">Details</a>
+                            &nbsp;
+                            <a href="javascript:;" class="text-danger oc-icon-trash restore-link" data-request="schedulerelease::onDelete" data-request-data="release_id: <?= $release->id ?>, refresh: 1," data-request-confirm="This will delete the pending release. Continue?">Delete</a>
+                        </td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td class="text-align-center" colspan="4">
+                        <span>There are no releases to display.</span>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
+
+<div id="scheduleOptions" class="form-buttons" style="display:none;">
+    <hr />
+    <div class="form-group field-datepicker span-full is-required">
+        <label>Publish At...</label>
+        <div class="row">
+            <div class="col-xs-5">
+                <div data-control="datepicker">
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Select a date"
+                        data-datepicker />
+                    <input
+                        type="hidden"
+                        name="date"
+                        data-datetime-value
+                        />
+                </div>
+            </div>
+            <div class="col-xs-5">
+                <div data-control="datepicker">
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Select a time"
+                        data-timepicker />
+                    <input
+                        type="hidden"
+                        name="time"
+                        data-datetime-value
+                        />
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <button
+                    type="button"
+                    data-request="onScheduleRelease"
+                    data-request-data="plugincode: '<?= $pluginCode ?>', modelname: '<?= $modelName ?>', modelid: '<?= $formModel->id ?>', adminid: '<?= $this->user->id ?>',"
+                    data-hotkey="ctrl+s, cmd+s"
+                    data-load-indicator="Scheduling..."
+                    class="btn btn-default btn-block">
+                    Schedule
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+    if(get_class($this) == 'System\Controllers\Settings'){
+?>
+    <script>
+        $(document).ready(function(){
+            $('<span class="btn-text"><a href="javascript;" onclick="$(\'#scheduleOptions\').show(); $(\'html, body\').animate({ scrollTop: $(document).height() }, 400); return false;">Schedule</a>&nbsp;</span>').insertBefore('#layout-body .form-buttons .loading-indicator-container span.btn-text');
+        });
+    </script>
+<?php
+    }
+    else{
+?>
+    <script>
+        $(document).ready(function(){
+            $('<span class="btn-text"><a href="javascript;" onclick="$(\'#scheduleOptions\').show(); $(\'html, body\').animate({ scrollTop: $(document).height() }, 400); return false;">Schedule</a>&nbsp;</span>').insertBefore('#layout-body .form-buttons .loading-indicator-container span.btn-text');
+        });
+    </script>
+<?php
+    }
+?>
+<script>
+    $(document).ready(function(){
+        $('#scheduleOptions').appendTo('#layout-body form.layout');
+    });
+</script>
